@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo | Gulf South Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root{--black:#0a0808;--leather:#1a1614;--gold:#c9a84c;--gold-bright:#e2bc5a;--gold-light:#f0d080;--gold-dim:#9a7a35;--white:#f5f0e8;--cream:#ede8dc;--light-gray:#f0ebe0;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,8,8,0.97);backdrop-filter:blur(12px);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(201,168,76,0.25);}
+        .nav-logo img{height:46px;width:auto;}
+        .nav-links a{color:var(--cream);text-decoration:none;margin-left:36px;font-family:'Cinzel',serif;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;opacity:0.75;transition:opacity 0.2s,color 0.2s;}
+        .nav-links a:hover{opacity:1;color:var(--gold);}.nav-links a.active{color:var(--gold);opacity:1;}
+
+        .page-hero{background:var(--leather);padding:140px 40px 80px;text-align:center;position:relative;}
+        .page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+        .page-eyebrow{font-family:'Cinzel',serif;font-size:0.68rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:16px;}
+        .page-hero h1{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4.5vw,3rem);color:var(--cream);font-weight:900;line-height:1.15;letter-spacing:0.04em;margin-bottom:16px;}
+        .page-hero p{color:rgba(237,232,220,0.55);font-size:1.05rem;max-width:600px;margin:0 auto;line-height:1.7;}
+
+        .demo-content{max-width:900px;margin:0 auto;padding:80px 40px;}
+        .demo-block{margin-bottom:80px;padding-bottom:80px;border-bottom:1px solid rgba(26,22,20,0.08);}
+        .demo-block:last-of-type{border-bottom:none;margin-bottom:0;}
+        .demo-label{font-family:'Cinzel',serif;font-size:0.65rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:12px;}
+        .demo-block h2{font-family:'Cinzel',serif;font-size:1.35rem;color:var(--leather);margin-bottom:16px;letter-spacing:0.06em;font-weight:700;}
+        .demo-block .demo-desc{font-size:1.03rem;line-height:1.85;color:#4a4540;margin-bottom:32px;max-width:700px;}
+
+        .video-wrap{background:var(--leather);border-radius:4px;overflow:hidden;border:1px solid rgba(201,168,76,0.2);display:flex;justify-content:center;align-items:center;padding:24px;}
+        .video-wrap iframe{max-width:100%;border:none;}
+
+        .coming-soon{background:var(--leather);border-radius:4px;padding:56px 40px;text-align:center;border:1px dashed rgba(201,168,76,0.25);}
+        .coming-soon-icon{font-size:2.4rem;margin-bottom:16px;}
+        .coming-soon h3{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--cream);margin-bottom:10px;letter-spacing:0.06em;}
+        .coming-soon p{color:rgba(237,232,220,0.4);font-size:0.9rem;}
+
+        .chatbot-note{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:4px;padding:32px;text-align:center;}
+        .chatbot-note h3{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--leather);margin-bottom:10px;letter-spacing:0.06em;}
+        .chatbot-note p{font-size:0.95rem;color:#5a5550;line-height:1.65;}
+        .chatbot-note .chatbot-arrow{font-size:2rem;margin-bottom:12px;}
+
+        .custom-cta{background:var(--light-gray);padding:48px;border-left:4px solid var(--gold-dim);display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+        .custom-cta h3{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--leather);margin-bottom:8px;letter-spacing:0.06em;}
+        .custom-cta p{color:#5a5550;font-size:0.95rem;line-height:1.65;}
+
+        .btn-primary{background:linear-gradient(135deg,var(--gold-bright),var(--gold-dim));color:var(--black);padding:16px 40px;border-radius:1px;font-family:'Cinzel',serif;font-weight:700;font-size:0.75rem;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;transition:all 0.25s;display:inline-block;box-shadow:0 4px 20px rgba(201,168,76,0.25);white-space:nowrap;}
+        .btn-primary:hover{background:linear-gradient(135deg,var(--gold-light),var(--gold-bright));transform:translateY(-2px);}
+
+        .cta-banner{background:var(--leather);padding:80px 40px;text-align:center;position:relative;}
+        .cta-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+        .cta-banner h2{font-family:'Cinzel',serif;font-size:clamp(1.4rem,3vw,1.9rem);color:var(--cream);margin-bottom:14px;font-weight:700;}
+        .cta-banner p{color:rgba(237,232,220,0.55);margin-bottom:36px;font-size:1.05rem;}
+
+        footer{background:var(--black);padding:48px 40px 32px;border-top:1px solid rgba(201,168,76,0.15);}
+        .footer-inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:32px;}
+        .footer-logo img{height:38px;width:auto;}
+        .footer-links a{color:rgba(245,240,232,0.3);text-decoration:none;font-size:0.75rem;margin-left:24px;transition:color 0.2s;font-family:'Cinzel',serif;letter-spacing:0.08em;}
+        .footer-links a:hover{color:var(--gold);}
+        .footer-copy{text-align:center;color:rgba(245,240,232,0.18);font-size:0.7rem;border-top:1px solid rgba(245,240,232,0.06);padding-top:24px;max-width:1060px;margin:0 auto;}
+
+        @media(max-width:768px){nav{padding:12px 20px;}.nav-logo img{height:34px;}.nav-links a{margin-left:14px;font-size:0.62rem;}.page-hero{padding:120px 24px 60px;}.demo-content{padding:60px 24px;}.custom-cta{flex-direction:column;padding:32px 24px;}.cta-banner{padding:60px 24px;}footer{padding:40px 24px 24px;}.footer-inner{flex-direction:column;align-items:flex-start;}.footer-links a{margin-left:0;margin-right:20px;}}
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo"><img src="logo-transparent-dark.png" alt="Gulf South Automation"></a>
+        <div class="nav-links">
+            <a href="index.html">Home</a><a href="about.html">About</a>
+            <a href="services.html">Services</a><a href="demo.html" class="active">Demo</a><a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <p class="page-eyebrow">See It In Action</p>
+        <h1>Watch Gulf South Automation Work.</h1>
+        <p>See exactly what your business looks like with automation running behind the scenes — before you ever spend a dollar.</p>
+    </section>
+
+    <div class="demo-content">
+
+        <div class="demo-block">
+            <p class="demo-label">Demo 01</p>
+            <h2>Missed Call SMS Automation</h2>
+            <p class="demo-desc">When a customer calls and you can't answer, this is what happens next. Watch how Gulf South Automation instantly follows up — keeping the lead warm while you stay focused on the job.</p>
+            <div class="video-wrap">
+                <iframe
+                    src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fgulfsouthautomation%2Fvideos%2F&show_text=false&width=560&height=315"
+                    width="560" height="315"
+                    style="border:none;overflow:hidden;max-width:100%;"
+                    scrolling="no" frameborder="0" allowfullscreen="true"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                </iframe>
+            </div>
+        </div>
+
+        <div class="demo-block">
+            <p class="demo-label">Demo 02</p>
+            <h2>Review Request Automation</h2>
+            <p class="demo-desc">Once a job is marked complete, your customer automatically receives a text asking for a Google review. No manual follow-up needed — your reputation builds itself.</p>
+            <div class="coming-soon">
+                <div class="coming-soon-icon">⭐</div>
+                <h3>Demo Coming Soon</h3>
+                <p>We're putting the finishing touches on this demo. Check back shortly.</p>
+            </div>
+        </div>
+
+        <div class="demo-block">
+            <p class="demo-label">Demo 03</p>
+            <h2>Website Chatbot</h2>
+            <p class="demo-desc">Your chatbot engages website visitors around the clock, captures their contact information, and keeps leads from slipping away after hours.</p>
+            <div class="chatbot-note">
+                <div class="chatbot-arrow">💬</div>
+                <h3>Live on This Page</h3>
+                <p>Click the chat icon in the bottom right corner of this page to interact with the chatbot live right now.</p>
+            </div>
+        </div>
+
+        <div class="custom-cta">
+            <div>
+                <h3>Need Something Custom?</h3>
+                <p>Have a specific workflow in mind? We build automations tailored to your business. Tell us what you need and we'll make it work.</p>
+            </div>
+            <a href="contact.html" class="btn-primary">Book a Free Consult</a>
+        </div>
+
+    </div>
+
+    <section class="cta-banner">
+        <h2>Ready to see what this looks like for your business?</h2>
+        <p>Schedule a free consultation and we'll walk you through everything.</p>
+        <a href="contact.html" class="btn-primary">Book a Free Consult</a>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-logo"><img src="logo-transparent-dark.png" alt="Gulf South Automation"></div>
+            <div class="footer-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms & Conditions</a></div>
+        </div>
+        <p class="footer-copy">© 2026 Gulf South Automation. A business owned and operated by Timothy A. Cronin Jr., Louisiana.</p>
+    </footer>
+    <script src="//code.tidio.co/9byojv8o0gaomksr5vrhsqws5pw5jb9g.js" async></script>
+</body>
+</html>

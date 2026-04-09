@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Gulf South Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root{--black:#0a0808;--leather:#1a1614;--gold:#c9a84c;--gold-bright:#e2bc5a;--gold-light:#f0d080;--gold-dim:#9a7a35;--white:#f5f0e8;--cream:#ede8dc;--light-gray:#f0ebe0;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,8,8,0.97);backdrop-filter:blur(12px);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(201,168,76,0.25);}
+        .nav-logo img{height:46px;width:auto;}
+        .nav-links a{color:var(--cream);text-decoration:none;margin-left:36px;font-family:'Cinzel',serif;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;opacity:0.75;transition:opacity 0.2s,color 0.2s;}
+        .nav-links a:hover{opacity:1;color:var(--gold);}.nav-links a.active{color:var(--gold);opacity:1;}
+
+        .page-hero{background:var(--leather);padding:140px 40px 80px;text-align:center;position:relative;}
+        .page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+        .page-eyebrow{font-family:'Cinzel',serif;font-size:0.68rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:16px;}
+        .page-hero h1{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4.5vw,3rem);color:var(--cream);font-weight:900;line-height:1.15;letter-spacing:0.04em;margin-bottom:16px;}
+        .page-hero p{color:rgba(237,232,220,0.55);font-size:1.05rem;max-width:580px;margin:0 auto;line-height:1.7;}
+
+        .services-content{max-width:920px;margin:0 auto;padding:80px 40px;}
+        .service-block{display:grid;grid-template-columns:72px 1fr;gap:32px;margin-bottom:64px;padding-bottom:64px;border-bottom:1px solid rgba(26,22,20,0.08);align-items:start;}
+        .service-block:last-of-type{border-bottom:none;}
+        .service-number{font-family:'Cinzel',serif;font-size:2.8rem;font-weight:900;color:var(--gold);opacity:0.3;line-height:1;}
+        .service-details h2{font-family:'Cinzel',serif;font-size:1.35rem;color:var(--leather);margin-bottom:16px;letter-spacing:0.06em;font-weight:700;}
+        .service-details p{font-size:1.03rem;line-height:1.85;color:#4a4540;margin-bottom:20px;}
+        .service-benefits{list-style:none;margin-top:16px;}
+        .service-benefits li{font-size:0.95rem;color:#4a4540;padding:8px 0;padding-left:22px;position:relative;line-height:1.5;}
+        .service-benefits li::before{content:'→';position:absolute;left:0;color:var(--gold);font-weight:bold;}
+
+        .btn-outline{background:transparent;color:var(--leather);padding:13px 32px;border-radius:1px;font-family:'Cinzel',serif;font-weight:700;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border:2px solid var(--gold-dim);transition:all 0.2s;display:inline-block;margin-top:16px;}
+        .btn-outline:hover{background:var(--gold);color:var(--black);border-color:var(--gold);}
+
+        .custom-block{background:var(--leather);padding:52px 48px;border-left:4px solid var(--gold);margin-top:32px;position:relative;overflow:hidden;}
+        .custom-block::before{content:'';position:absolute;top:0;right:0;bottom:0;width:30%;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.05));}
+        .custom-block h2{font-family:'Cinzel',serif;font-size:1.35rem;color:var(--cream);margin-bottom:16px;letter-spacing:0.06em;font-weight:700;}
+        .custom-block p{color:rgba(237,232,220,0.6);font-size:1.03rem;line-height:1.85;margin-bottom:32px;}
+
+        .btn-primary{background:linear-gradient(135deg,var(--gold-bright),var(--gold-dim));color:var(--black);padding:16px 40px;border-radius:1px;font-family:'Cinzel',serif;font-weight:700;font-size:0.75rem;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none;transition:all 0.25s;display:inline-block;box-shadow:0 4px 20px rgba(201,168,76,0.25);}
+        .btn-primary:hover{background:linear-gradient(135deg,var(--gold-light),var(--gold-bright));transform:translateY(-2px);}
+
+        .cta-banner{background:var(--leather);padding:80px 40px;text-align:center;position:relative;}
+        .cta-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+        .cta-banner h2{font-family:'Cinzel',serif;font-size:clamp(1.4rem,3vw,1.9rem);color:var(--cream);margin-bottom:14px;font-weight:700;}
+        .cta-banner p{color:rgba(237,232,220,0.55);margin-bottom:36px;font-size:1.05rem;}
+
+        footer{background:var(--black);padding:48px 40px 32px;border-top:1px solid rgba(201,168,76,0.15);}
+        .footer-inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:32px;}
+        .footer-logo img{height:38px;width:auto;}
+        .footer-links a{color:rgba(245,240,232,0.3);text-decoration:none;font-size:0.75rem;margin-left:24px;transition:color 0.2s;font-family:'Cinzel',serif;letter-spacing:0.08em;}
+        .footer-links a:hover{color:var(--gold);}
+        .footer-copy{text-align:center;color:rgba(245,240,232,0.18);font-size:0.7rem;border-top:1px solid rgba(245,240,232,0.06);padding-top:24px;max-width:1060px;margin:0 auto;}
+
+        @media(max-width:768px){nav{padding:12px 20px;}.nav-logo img{height:34px;}.nav-links a{margin-left:14px;font-size:0.62rem;}.page-hero{padding:120px 24px 60px;}.services-content{padding:60px 24px;}.service-block{grid-template-columns:1fr;gap:12px;}.service-number{font-size:2rem;}.custom-block{padding:36px 24px;}.cta-banner{padding:60px 24px;}footer{padding:40px 24px 24px;}.footer-inner{flex-direction:column;align-items:flex-start;}.footer-links a{margin-left:0;margin-right:20px;}}
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-logo"><img src="logo-transparent-dark.png" alt="Gulf South Automation"></a>
+        <div class="nav-links">
+            <a href="index.html">Home</a><a href="about.html">About</a>
+            <a href="services.html" class="active">Services</a><a href="demo.html">Demo</a><a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <p class="page-eyebrow">What We Offer</p>
+        <h1>Automation That Works While You Work.</h1>
+        <p>We build systems that capture leads, build your reputation, and engage your customers — automatically.</p>
+    </section>
+
+    <div class="services-content">
+        <div class="service-block">
+            <div class="service-number">01</div>
+            <div class="service-details">
+                <h2>Missed Call SMS Automation</h2>
+                <p>When you're on a job and can't pick up the phone, every unanswered call is a potential customer who moves on to your competitor. Our missed call automation instantly sends a professional text message to anyone who calls and doesn't reach you — letting them know you'll be in touch shortly and keeping the lead warm until you're ready to respond.</p>
+                <ul class="service-benefits">
+                    <li>Instant automatic text response to every missed call</li>
+                    <li>Customizable message with your business name and branding</li>
+                    <li>Every lead logged automatically for easy follow-up</li>
+                    <li>Works 24/7 — even nights, weekends, and holidays</li>
+                </ul>
+                <a href="demo.html" class="btn-outline">See It In Action</a>
+            </div>
+        </div>
+
+        <div class="service-block">
+            <div class="service-number">02</div>
+            <div class="service-details">
+                <h2>Review Request Automation</h2>
+                <p>Online reviews are one of the most powerful ways to grow your business. Once a job is marked complete, our system automatically sends your customer a text requesting a Google review — no manual follow-up required. More reviews mean more visibility and more trust with new customers searching for your services.</p>
+                <ul class="service-benefits">
+                    <li>Automatic review request sent after every completed job</li>
+                    <li>Drives more 5-star Google reviews without the awkward ask</li>
+                    <li>Builds your online reputation on autopilot</li>
+                    <li>More reviews = higher rankings in local search results</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="service-block">
+            <div class="service-number">03</div>
+            <div class="service-details">
+                <h2>Website Chatbot</h2>
+                <p>Your website should be working for you around the clock. Our chatbot engages visitors 24/7, answers common questions, and captures lead information even when you're unavailable — so no opportunity slips through the cracks after hours or on weekends.</p>
+                <ul class="service-benefits">
+                    <li>Engages website visitors instantly — day or night</li>
+                    <li>Captures name, phone, and inquiry details automatically</li>
+                    <li>Answers common questions so you don't have to</li>
+                    <li>Turns your website into a lead generation machine</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="custom-block">
+            <h2>Custom Solutions</h2>
+            <p>Every business is different. If you need something specific — a custom workflow, a unique integration, or an automation built around the way your business operates — we'll build it. Don't see exactly what you need? Tell us what you're trying to accomplish and we'll make it work.</p>
+            <a href="contact.html" class="btn-primary">Let's Talk</a>
+        </div>
+    </div>
+
+    <section class="cta-banner">
+        <h2>Not sure where to start?</h2>
+        <p>Book a free consultation and we'll recommend the right solution for your business.</p>
+        <a href="contact.html" class="btn-primary">Book a Free Consult</a>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-logo"><img src="logo-transparent-dark.png" alt="Gulf South Automation"></div>
+            <div class="footer-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms & Conditions</a></div>
+        </div>
+        <p class="footer-copy">© 2026 Gulf South Automation. A business owned and operated by Timothy A. Cronin Jr., Louisiana.</p>
+    </footer>
+    <script src="//code.tidio.co/9byojv8o0gaomksr5vrhsqws5pw5jb9g.js" async></script>
+</body>
+</html>

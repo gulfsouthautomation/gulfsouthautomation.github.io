@@ -6,12 +6,219 @@
     <title>Gulf South Automation | Business Automation for Local Service Companies</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --black:#0a0808; --leather:#1a1614; --gold:#c9a84c; --gold-bright:#e2bc5a; --gold-light:#f0d080; --gold-dim:#9a7a35; --white:#f5f0e8; --cream:#ede8dc; }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Source Sans 3',sans-serif; background:var(--white); color:var(--black); }
+        :root {
+            --black: #0a0808;
+            --dark: #111010;
+            --leather: #1a1614;
+            --gold: #c9a84c;
+            --gold-bright: #e2bc5a;
+            --gold-light: #f0d080;
+            --gold-dim: #9a7a35;
+            --white: #f5f0e8;
+            --cream: #ede8dc;
+            --light-gray: #f0ebe0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Source Sans 3', sans-serif; background: var(--white); color: var(--black); overflow-x: hidden; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(10,8,8,0.97); backdrop-filter: blur(12px);
+            padding: 14px 48px; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(201,168,76,0.25);
+        }
+        .nav-logo img { height: 46px; width: auto; }
+        .nav-links a {
+            color: var(--cream); text-decoration: none; margin-left: 36px;
+            font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600;
+            letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75;
+            transition: opacity 0.2s, color 0.2s;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--gold); }
+        .nav-links a.active { color: var(--gold); opacity: 1; }
+
+        .hero {
+            min-height: 100vh;
+            background-color: var(--leather);
+            background-image: url('banner.png');
+            background-size: cover; background-position: center top;
+            display: flex; align-items: flex-end; justify-content: center;
+            padding: 0 40px 80px; position: relative;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(10,8,8,0.3) 0%, rgba(10,8,8,0.15) 40%, rgba(10,8,8,0.8) 75%, rgba(10,8,8,0.97) 100%);
+        }
+        .hero-content { position: relative; z-index: 1; text-align: center; max-width: 840px; }
+        .hero-tagline {
+            font-family: 'Crimson Text', serif; font-style: italic;
+            font-size: clamp(1.15rem, 2.8vw, 1.65rem); color: var(--gold-bright);
+            margin-bottom: 20px; opacity: 0; animation: fadeUp 1s ease forwards 0.3s; letter-spacing: 0.02em;
+        }
+        .hero h1 {
+            font-family: 'Cinzel', serif; font-size: clamp(1.9rem, 5vw, 3.6rem);
+            font-weight: 900; color: var(--white); line-height: 1.12; margin-bottom: 20px;
+            opacity: 0; animation: fadeUp 1s ease forwards 0.5s; letter-spacing: 0.04em;
+        }
+        .hero h1 span { color: var(--gold-bright); }
+        .hero-divider {
+            width: 120px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto 22px; opacity: 0; animation: fadeUp 1s ease forwards 0.65s;
+        }
+        .hero-sub {
+            font-size: 1.08rem; font-weight: 300; color: rgba(245,240,232,0.7);
+            line-height: 1.75; margin-bottom: 44px;
+            opacity: 0; animation: fadeUp 1s ease forwards 0.75s;
+        }
+        .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 1s ease forwards 0.9s; }
+        .hero-badges { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 28px; opacity: 0; animation: fadeUp 1s ease forwards 1.05s; }
+        .hero-badge {
+            font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.14em;
+            color: rgba(201,168,76,0.65); padding: 5px 14px;
+            border: 1px solid rgba(201,168,76,0.22); border-radius: 20px;
+        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold-dim));
+            color: var(--black); padding: 16px 40px; border-radius: 1px;
+            font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.75rem;
+            letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none;
+            transition: all 0.25s; display: inline-block;
+            box-shadow: 0 4px 20px rgba(201,168,76,0.25);
+        }
+        .btn-primary:hover { background: linear-gradient(135deg, var(--gold-light), var(--gold-bright)); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.35); }
+        .btn-secondary {
+            background: transparent; color: var(--cream); padding: 15px 40px; border-radius: 1px;
+            font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.75rem;
+            letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none;
+            border: 1px solid rgba(201,168,76,0.4); transition: all 0.25s; display: inline-block;
+        }
+        .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+        .problem { background: var(--white); padding: 100px 40px; }
+        .problem-inner { max-width: 1060px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .section-eyebrow { font-family: 'Cinzel', serif; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+        .problem-text h2 { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 2.8vw, 1.95rem); color: var(--leather); margin-bottom: 24px; line-height: 1.25; font-weight: 700; }
+        .problem-text p { font-size: 1.03rem; line-height: 1.85; color: #4a4540; margin-bottom: 18px; }
+        .stat-cards { display: flex; flex-direction: column; gap: 16px; }
+        .stat-card { background: var(--leather); color: var(--white); padding: 28px 32px; border-left: 3px solid var(--gold); }
+        .stat-number { font-family: 'Cinzel', serif; font-size: 2.6rem; color: var(--gold-bright); font-weight: 900; line-height: 1; margin-bottom: 8px; }
+        .stat-label { font-size: 0.88rem; opacity: 0.6; line-height: 1.55; }
+
+        .services-preview { background: var(--leather); padding: 100px 40px; position: relative; }
+        .services-preview::before, .services-preview::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        .services-preview::before { top: 0; } .services-preview::after { bottom: 0; }
+        .services-preview-inner { max-width: 1060px; margin: 0 auto; }
+        .section-title { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 3vw, 2rem); color: var(--cream); margin-bottom: 52px; line-height: 1.2; font-weight: 700; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2px; }
+        .service-card { background: rgba(245,240,232,0.03); padding: 36px 28px; border-top: 2px solid var(--gold-dim); transition: background 0.2s; }
+        .service-card:hover { background: rgba(201,168,76,0.07); }
+        .service-icon { font-size: 1.6rem; margin-bottom: 18px; }
+        .service-card h3 { font-family: 'Cinzel', serif; font-size: 0.82rem; letter-spacing: 0.1em; color: var(--gold-bright); margin-bottom: 14px; font-weight: 600; text-transform: uppercase; }
+        .service-card p { font-size: 0.9rem; color: rgba(245,240,232,0.5); line-height: 1.75; }
+        .services-link { display: inline-block; margin-top: 52px; color: var(--gold); font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; padding-bottom: 4px; border-bottom: 1px solid var(--gold-dim); transition: all 0.2s; }
+        .services-link:hover { color: var(--gold-bright); border-color: var(--gold-bright); }
+
+        .cta-banner { background: var(--white); padding: 90px 40px; text-align: center; }
+        .cta-banner h2 { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--leather); margin-bottom: 14px; font-weight: 700; }
+        .cta-banner p { color: #6a6055; margin-bottom: 40px; font-size: 1.05rem; }
+
+        footer { background: var(--black); padding: 48px 40px 32px; border-top: 1px solid rgba(201,168,76,0.15); }
+        .footer-inner { max-width: 1060px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; margin-bottom: 32px; }
+        .footer-logo img { height: 38px; width: auto; }
+        .footer-links a { color: rgba(245,240,232,0.3); text-decoration: none; font-size: 0.75rem; margin-left: 24px; transition: color 0.2s; font-family: 'Cinzel', serif; letter-spacing: 0.08em; }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-copy { text-align: center; color: rgba(245,240,232,0.18); font-size: 0.7rem; border-top: 1px solid rgba(245,240,232,0.06); padding-top: 24px; max-width: 1060px; margin: 0 auto; }
+
+        @media (max-width: 768px) {
+            nav { padding: 12px 20px; } .nav-logo img { height: 34px; } .nav-links a { margin-left: 14px; font-size: 0.62rem; }
+            .hero { padding: 0 24px 60px; }
+            .problem { padding: 64px 24px; } .problem-inner { grid-template-columns: 1fr; gap: 48px; }
+            .services-preview { padding: 64px 24px; }
+            .cta-banner { padding: 64px 24px; }
+            footer { padding: 40px 24px 24px; } .footer-inner { flex-direction: column; align-items: flex-start; } .footer-links a { margin-left: 0; margin-right: 20px; }
+        }
     </style>
 </head>
 <body>
-    <p>TEST PASTE WORKING</p>
+    <nav>
+        <a href="index.html" class="nav-logo"><img src="logo-transparent-dark.png" alt="Gulf South Automation"></a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="demo.html">Demo</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-tagline">'Never Lose Another Lead Because You Were Busy'</p>
+            <h1>We automate the parts of your business<br>that <span>cost you customers.</span></h1>
+            <div class="hero-divider"></div>
+            <p class="hero-sub">Built for local service businesses in the Greater New Orleans area. Stop losing leads to missed calls, slow follow-ups, and an outdated online presence.</p>
+            <div class="hero-ctas">
+                <a href="contact.html" class="btn-primary">Book a Free Consult</a>
+                <a href="demo.html" class="btn-secondary">View Demo</a>
+            </div>
+            <div class="hero-badges">
+                <span class="hero-badge">Missed Call → Instant SMS</span>
+                <span class="hero-badge">Lead Response Automation</span>
+                <span class="hero-badge">24/7 Coverage</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="problem">
+        <div class="problem-inner">
+            <div class="problem-text">
+                <p class="section-eyebrow">The Problem</p>
+                <h2>Every missed call is a missed opportunity.</h2>
+                <p>When you're on a job, you can't always answer the phone. When a customer doesn't hear back, they move on — to your competitor.</p>
+                <p>Every slow follow-up is a lead lost. Every customer who can't find you online chose someone else. You're great at your trade. But running the business side costs you time, money, and customers every single day.</p>
+                <p>Gulf South Automation puts your follow-up on autopilot so you can focus on what you do best.</p>
+            </div>
+            <div class="stat-cards">
+                <div class="stat-card"><div class="stat-number">85%</div><div class="stat-label">of customers won't call back if their first call goes unanswered</div></div>
+                <div class="stat-card"><div class="stat-number">24/7</div><div class="stat-label">Your automation works around the clock — even when you're on a job</div></div>
+                <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Local — built for Greater New Orleans service businesses</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-preview">
+        <div class="services-preview-inner">
+            <p class="section-eyebrow" style="color:var(--gold-dim);">What We Do</p>
+            <h2 class="section-title">Automation that works while you work.</h2>
+            <div class="services-grid">
+                <div class="service-card"><div class="service-icon">📱</div><h3>Missed Call SMS</h3><p>Instantly text back any missed caller — keeping the lead warm until you're ready to respond.</p></div>
+                <div class="service-card"><div class="service-icon">⭐</div><h3>Review Automation</h3><p>Auto follow-up after every completed job and request Google reviews — no manual effort required.</p></div>
+                <div class="service-card"><div class="service-icon">💬</div><h3>Website Chatbot</h3><p>Capture leads from your website 24/7 — even after hours when you can't answer.</p></div>
+                <div class="service-card"><div class="service-icon">⚙️</div><h3>Custom Solutions</h3><p>Need something specific? We build custom automations tailored to the way you operate.</p></div>
+            </div>
+            <a href="services.html" class="services-link">View All Services →</a>
+        </div>
+    </section>
+
+    <section class="cta-banner">
+        <p class="section-eyebrow">Get Started</p>
+        <h2>Ready to stop losing leads?</h2>
+        <p>Let's talk about what automation can do for your business.</p>
+        <a href="contact.html" class="btn-primary">Book a Free Consult</a>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-logo"><img src="logo-transparent-dark.png" alt="Gulf South Automation"></div>
+            <div class="footer-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms & Conditions</a></div>
+        </div>
+        <p class="footer-copy">© 2026 Gulf South Automation. A business owned and operated by Timothy A. Cronin Jr., Louisiana.</p>
+    </footer>
+
+    <script src="//code.tidio.co/9byojv8o0gaomksr5vrhsqws5pw5jb9g.js" async></script>
 </body>
 </html>

@@ -3,31 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms and Conditions - Gulf South Automation</title>
+    <title>Terms and Conditions | Gulf South Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; color: #333; }
-        h1, h2 { color: #1a1a2e; }
-        nav a { margin-right: 20px; color: #1a1a2e; text-decoration: none; font-weight: bold; }
+        :root{--black:#0a0808;--leather:#1a1614;--gold:#c9a84c;--gold-bright:#e2bc5a;--gold-light:#f0d080;--gold-dim:#9a7a35;--white:#f5f0e8;--cream:#ede8dc;--light-gray:#f0ebe0;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Source Sans 3',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,8,8,0.97);backdrop-filter:blur(12px);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(201,168,76,0.25);}
+        .nav-logo img{height:46px;width:auto;}
+        .nav-links a{color:var(--cream);text-decoration:none;margin-left:36px;font-family:'Cinzel',serif;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;opacity:0.75;transition:opacity 0.2s,color 0.2s;}
+        .nav-links a:hover{opacity:1;color:var(--gold);}
+
+        .page-hero{background:var(--leather);padding:140px 40px 72px;text-align:center;position:relative;}
+        .page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+        .page-eyebrow{font-family:'Cinzel',serif;font-size:0.68rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:16px;}
+        .page-hero h1{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4vw,2.6rem);color:var(--cream);font-weight:900;line-height:1.15;letter-spacing:0.04em;margin-bottom:12px;}
+        .page-hero .updated{color:rgba(237,232,220,0.4);font-size:0.85rem;}
+
+        .policy-content{max-width:800px;margin:0 auto;padding:72px 40px 96px;}
+
+        .policy-section{margin-bottom:48px;}
+        .policy-section h2{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--leather);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(201,168,76,0.3);letter-spacing:0.08em;font-weight:700;text-transform:uppercase;}
+        .policy-section p{font-size:1rem;line-height:1.85;color:#4a4540;margin-bottom:14px;}
+        .policy-section ul{margin:12px 0 14px 20px;}
+        .policy-section ul li{font-size:1rem;line-height:1.75;color:#4a4540;margin-bottom:8px;}
+
+        .compliance-box{background:var(--leather);border-left:4px solid var(--gold);padding:28px 32px;margin:24px 0;border-radius:0 2px 2px 0;}
+        .compliance-box p{color:rgba(237,232,220,0.75);font-size:0.95rem;line-height:1.8;margin:0;}
+        .compliance-box strong{color:var(--gold-bright);}
+
+        footer{background:var(--black);padding:48px 40px 32px;border-top:1px solid rgba(201,168,76,0.15);}
+        .footer-inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:32px;}
+        .footer-logo img{height:38px;width:auto;}
+        .footer-links a{color:rgba(245,240,232,0.3);text-decoration:none;font-size:0.75rem;margin-left:24px;transition:color 0.2s;font-family:'Cinzel',serif;letter-spacing:0.08em;}
+        .footer-links a:hover{color:var(--gold);}
+        .footer-copy{text-align:center;color:rgba(245,240,232,0.18);font-size:0.7rem;border-top:1px solid rgba(245,240,232,0.06);padding-top:24px;max-width:1060px;margin:0 auto;}
+
+        @media(max-width:768px){nav{padding:12px 20px;}.nav-logo img{height:34px;}.nav-links a{margin-left:14px;font-size:0.62rem;}.page-hero{padding:120px 24px 56px;}.policy-content{padding:56px 24px 72px;}footer{padding:40px 24px 24px;}.footer-inner{flex-direction:column;align-items:flex-start;}.footer-links a{margin-left:0;margin-right:20px;}}
     </style>
 </head>
 <body>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms.html">Terms and Conditions</a>
+        <a href="index.html" class="nav-logo"><img src="logo-transparent-dark.png" alt="Gulf South Automation"></a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="demo.html">Demo</a>
+            <a href="contact.html">Contact</a>
+        </div>
     </nav>
-    <h1>Terms and Conditions</h1>
-    <p>Last updated: March 2026</p>
-    <p>By using Gulf South Automation's services, you agree to these Terms and Conditions.</p>
-    <h2>Services</h2>
-    <p>Gulf South Automation provides SMS automation services for local businesses. Our services include automated SMS responses triggered by missed calls or web form submissions.</p>
-    <h2>SMS Messaging</h2>
-    <p>By initiating contact with a business using our platform, you consent to receive automated SMS messages in response. Message and data rates may apply. Reply STOP at any time to unsubscribe.</p>
-    <h2>Use of Services</h2>
-    <p>Our services are intended for legitimate business communication only. No spam or unsolicited marketing messages are sent through our platform.</p>
-    <h2>Limitation of Liability</h2>
-    <p>Gulf South Automation is not liable for any damages arising from the use or inability to use our services.</p>
-    <h2>Contact</h2>
-    <p>For questions, contact us at gulfsouthautomation@gmail.com</p>
+
+    <section class="page-hero">
+        <p class="page-eyebrow">Legal</p>
+        <h1>Terms and Conditions</h1>
+        <p class="updated">Last updated: March 2026</p>
+    </section>
+
+    <div class="policy-content">
+
+        <div class="policy-section">
+            <p>By using Gulf South Automation's services, you agree to these Terms and Conditions. Gulf South Automation is owned and operated by Timothy A. Cronin Jr., a Louisiana-based automation service provider operating at gulfsouthautomation.com.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2>Services</h2>
+            <p>Gulf South Automation provides business automation services for local service businesses, including but not limited to:</p>
+            <ul>
+                <li>Automated SMS responses triggered by missed calls or web form submissions</li>
+                <li>Review request automation via SMS following job completion</li>
+                <li>Website chatbot and lead capture automation</li>
+                <li>Custom automation solutions built to client specifications</li>
+            </ul>
+            <p>Our services are intended for legitimate business use only. Unsolicited marketing messages are never sent through our platform.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2>SMS Messaging</h2>
+            <div class="compliance-box">
+                <p>By initiating contact with a business using our platform, you consent to receive automated SMS messages in response to your inquiry. <strong>Message and data rates may apply.</strong> Reply <strong>STOP</strong> at any time to unsubscribe from future messages. Reply <strong>HELP</strong> for assistance.</p>
+            </div>
+            <p>SMS messages sent through Gulf South Automation are transactional and informational in nature — they are triggered by your action (such as calling a business or submitting a form) and are intended to facilitate communication between you and the business you contacted.</p>
+            <p>Message frequency will vary. Standard messaging rates from your mobile carrier may apply. SMS opt-in data is never shared with third parties for marketing purposes.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2>Use of Services</h2>
+            <p>You agree to use our services only for lawful purposes and in compliance with all applicable laws and regulations. You may not use our services to:</p>
+            <ul>
+                <li>Send unsolicited commercial messages or spam</li>
+                <li>Harass, threaten, or harm any individual</li>
+                <li>Violate any applicable federal, state, or local laws</li>
+                <li>Infringe on the intellectual property rights of others</li>
+                <li>Engage in any activity that disrupts or interferes with our services</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h2>Client Responsibilities</h2>
+            <p>Clients using Gulf South Automation's services are responsible for:</p>
+            <ul>
+                <li>Ensuring their use of our automation services complies with applicable laws, including the Telephone Consumer Protection Act (TCPA)</li>
+                <li>Obtaining any required consents from their own customers before automated communications are triggered</li>
+                <li>Providing accurate business information for use in automated messages</li>
+                <li>Maintaining up-to-date contact information with Gulf South Automation</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h2>Payment and Billing</h2>
+            <p>Service fees are agreed upon prior to the start of any engagement. Gulf South Automation reserves the right to modify pricing with reasonable advance notice to existing clients. All fees are due as outlined in your individual service agreement.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2>Limitation of Liability</h2>
+            <p>Gulf South Automation shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our services, including but not limited to loss of revenue, loss of data, or business interruption.</p>
+            <p>Our total liability for any claim arising from these terms or the use of our services shall not exceed the amount paid by you for services in the three months preceding the claim.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2>Intellectual Property</h2>
+            <p>All content, branding, and materials associated with Gulf South Automation — including but not limited to the logo, website design, and written content — are the intellectual property of Gulf South Automation and Timothy A. Cronin Jr. Unauthorized use, reproduction, or distribution is prohibited.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2>Termination</h2>
+            <p>Either party may terminate a service agreement with reasonable written notice. Upon termination, all automated services will be deactivated and any outstanding fees will become due immediately.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2>Governing Law</h2>
+            <p>These Terms and Conditions are governed by the laws of the State of Louisiana. Any disputes arising under these terms shall be resolved in the courts of Louisiana.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2>Changes to These Terms</h2>
+            <p>We reserve the right to update these Terms and Conditions at any time. Continued use of our services after changes are posted constitutes acceptance of the updated terms. We will update the date at the top of this page when changes are made.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2>Contact Us</h2>
+            <p>If you have questions about these Terms and Conditions, please contact us:</p>
+            <p><strong>Gulf South Automation</strong><br>
+            Timothy A. Cronin Jr.<br>
+            Email: info@gulfsouthautomation.com<br>
+            Phone: (504) 336-7904<br>
+            Website: gulfsouthautomation.com</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-logo"><img src="logo-transparent-dark.png" alt="Gulf South Automation"></div>
+            <div class="footer-links"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms & Conditions</a></div>
+        </div>
+        <p class="footer-copy">© 2026 Gulf South Automation. A business owned and operated by Timothy A. Cronin Jr., Louisiana.</p>
+    </footer>
+    <script src="//code.tidio.co/9byojv8o0gaomksr5vrhsqws5pw5jb9g.js" async></script>
 </body>
 </html>
