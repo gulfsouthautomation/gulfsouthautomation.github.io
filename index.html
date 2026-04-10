@@ -40,15 +40,13 @@
         .hero {
             min-height: 100vh;
             background-color: var(--leather);
-            background-image: url('banner.jpeg');
-            background-size: 100% auto; background-position: center top;
+            background-image: none;
+            background-color: var(--leather);
             display: flex; align-items: flex-end; justify-content: center;
             padding: 0 40px 80px; position: relative;
         }
-        .hero-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to bottom, rgba(10,8,8,0.55) 0%, rgba(10,8,8,0.45) 40%, rgba(10,8,8,0.88) 75%, rgba(10,8,8,0.98) 100%);
-        }
+        .hero-overlay { display: none; }
+        .hero-logo-img { width: 220px; margin: 0 auto 32px; display: block; opacity: 0; animation: fadeUp 1s ease forwards 0.2s; }
         .hero-content { position: relative; z-index: 1; text-align: center; max-width: 840px; }
         .hero-tagline {
             font-family: 'Crimson Text', serif; font-style: italic;
@@ -157,6 +155,7 @@
     <section class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
+            <img src="logo-transparent-dark.jpeg" alt="Gulf South Automation" class="hero-logo-img">
             <p class="hero-tagline">'Never Lose Another Lead Because You Were Busy'</p>
             <h1>We automate the parts of your business<br>that <span>cost you customers.</span></h1>
             <div class="hero-divider"></div>
