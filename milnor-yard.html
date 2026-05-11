@@ -38,7 +38,8 @@
     .alert{background:#2d1b0e;border:1px solid #e3b341;color:#e3b341;padding:10px 12px;border-radius:6px;margin-bottom:12px;font-size:12px;line-height:1.5;}
     .sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
     .sec-ttl{font-size:11px;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:.05em;}
-    .clr-btn{font-size:10px;color:#484f58;background:none;border:none;cursor:pointer;padding:3px 8px;border-radius:4px;font-family:inherit;}
+    .clr-btn{font-size:11px;color:#da3633;background:none;border:1px solid #3a1f1f;cursor:pointer;padding:3px 10px;border-radius:4px;font-family:inherit;}
+    .clr-btn:active{color:#f85149;border-color:#f85149;}
     .confirm-row{display:flex;gap:6px;margin-bottom:10px;align-items:center;}
     .confirm-lbl{color:#e3b341;font-size:11px;}
     .btn-yes{padding:4px 12px;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;background:#da3633;color:#fff;font-family:inherit;}
@@ -103,6 +104,15 @@
     <div class="card"><div class="card-lbl">Yard F</div><div class="card-val" id="cnt-MCH3">&#8212;</div><div class="card-sub">MCH3</div></div>
   </div>
   <div class="sec-hdr">
+    <span class="sec-ttl">INVENTORY</span>
+    <button class="clr-btn" id="clrInvBtn" onclick="startClr('inv')">Clear Inventory</button>
+  </div>
+  <div id="clrInvConfirm" class="confirm-row" style="display:none;">
+    <span class="confirm-lbl">Sure?</span>
+    <button class="btn-yes" onclick="doClr('inv')">Yes</button>
+    <button class="btn-no"  onclick="cancelClr('inv')">No</button>
+  </div>
+  <div class="sec-hdr" style="margin-top:8px;">
     <span class="sec-ttl">RECENT MOVEMENTS</span>
     <button class="clr-btn" id="clrDashBtn" onclick="startClr('dash')">Clear All</button>
   </div>
@@ -414,7 +424,7 @@ function renderMoves(){
     var isToday=new Date(m.ts).toDateString()===new Date().toDateString();
     var fromStr = m.fromLoc ? esc(m.from)+' '+esc(m.fromLoc) : esc(m.from);
     var toStr   = m.toLoc   ? esc(m.to)+' '+esc(m.toLoc)     : esc(m.to);
-    return '<div class="mv-item'+(isToday?' today':'')+'"><div class="mv-meta">'+fmt(m.ts)+'</div>'
+    return '<div class="mv-item'+(isToday?' today':'')+'" ><div class="mv-meta">'+fmt(m.ts)+'</div>'
       +'<div class="mv-title"><strong style="color:#58a6ff">'+esc(m.item)+'</strong>'+(m.desc?' - '+esc(m.desc):'')+  '</div>'
       +'<div><span class="mv-tag">'+fromStr+' &rarr; '+toStr+'</span><span class="mv-qty">Qty: '+m.qty+'</span></div>'
       +(m.notes?'<div class="mv-notes">'+esc(m.notes)+'</div>':'')+'</div>';
@@ -485,10 +495,12 @@ function cancelClr(which){
 function doClr(which){
   if(which==='mv'||which==='dash'){moves=[];}
   if(which==='cc'){cc=[];phys={};}
+  if(which==='inv'){inv=[];document.getElementById('hdrSub').textContent='No data uploaded yet';}
   save(); cancelClr(which);
   if(which==='mv') renderMoves();
   if(which==='dash') renderDash();
   if(which==='cc') renderCycle();
+  if(which==='inv') renderDash();
 }
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
