@@ -178,7 +178,7 @@
 <div id="tab-cycle" class="panel">
   <div class="card">
     <div style="color:#58a6ff;font-size:11px;font-weight:600;margin-bottom:6px;">&#9973; CYCLE COUNT</div>
-    <div style="font-size:11px;color:#8b949e;margin-bottom:10px;line-height:1.6;">Upload today's cycle count CSV. Format: Item, Locator (header row required). Oracle qty is auto-matched from imported inventory &#8212; import the Excel file first.</div>
+    <div style="font-size:11px;color:#8b949e;margin-bottom:10px;line-height:1.6;">Upload today's cycle count CSV. Must have "Item" and "Locator" column headers. Oracle qty is auto-matched from imported inventory &#8212; import the Excel file first.</div>
     <label class="form-lbl">CSV FILE</label>
     <input type="file" id="csvInput" accept=".csv,.txt" onchange="onCsv(event)" style="font-size:12px;color:#8b949e;width:100%;font-family:inherit;">
   </div>
@@ -437,9 +437,18 @@ function onCsv(event){
   var reader=new FileReader();
   reader.onload=function(e){
     var lines=e.target.result.split(/\r?\n/); cc=[]; phys={};
+    var itemCol=0, locCol=1;
+    if(lines.length>0){
+      var hdrParts=csvSplit(lines[0]);
+      for(var h=0;h<hdrParts.length;h++){
+        var hv=strip(hdrParts[h]).toLowerCase();
+        if(hv==='item'||hv==='item number'||hv==='item no') itemCol=h;
+        else if(hv==='locator') locCol=h;
+      }
+    }
     for(var i=1;i<lines.length;i++){
       var raw=lines[i]; if(!raw.trim()) continue;
-      var parts=csvSplit(raw), item=strip(parts[0]), loc=strip(parts[1]||'');
+      var parts=csvSplit(raw), item=strip(parts[itemCol]||''), loc=strip(parts[locCol]||'');
       if(!item) continue;
       var invMatch=inv.filter(function(x){return x.item.toUpperCase()===item.toUpperCase();});
       var oQty=0;
@@ -459,7 +468,7 @@ function onCsv(event){
 }
 function renderCycle(){
   var el=document.getElementById('cycleOut');
-  if(!cc.length){el.innerHTML='<div class="empty">Upload a CSV to start cycle count.<br>Format: Item, Locator (header row required).<br>Oracle qty auto-matched from imported inventory.</div>';return;}
+  if(!cc.length){el.innerHTML='<div class="empty">Upload a CSV to start cycle count.<br>Must have "Item" and "Locator" column headers.<br>Oracle qty auto-matched from imported inventory.</div>';return;}
   var rows=cc.map(function(c,idx){
     var p=phys[idx]!==undefined?phys[idx]:'', hasDiff=p!==''&&parseFloat(p)!==c.oQty;
     var varText=p!==''?(parseFloat(p)-c.oQty>0?'+':'')+(parseFloat(p)-c.oQty):'--';
