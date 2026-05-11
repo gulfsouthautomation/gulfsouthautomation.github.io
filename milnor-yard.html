@@ -437,9 +437,11 @@ function onCsv(event){
   var reader=new FileReader();
   reader.onload=function(e){
     var lines=e.target.result.split(/\r?\n/); cc=[]; phys={};
+    var delim=lines[0]&&lines[0].indexOf('\t')>=0?'\t':',';
+    function splitLine(l){return delim==='\t'?l.split('\t'):csvSplit(l);}
     var itemCol=0, locCol=1;
     if(lines.length>0){
-      var hdrParts=csvSplit(lines[0]);
+      var hdrParts=splitLine(lines[0]);
       for(var h=0;h<hdrParts.length;h++){
         var hv=strip(hdrParts[h]).toLowerCase();
         if(hv==='item'||hv==='item number'||hv==='item no') itemCol=h;
@@ -448,7 +450,7 @@ function onCsv(event){
     }
     for(var i=1;i<lines.length;i++){
       var raw=lines[i]; if(!raw.trim()) continue;
-      var parts=csvSplit(raw), item=strip(parts[itemCol]||''), loc=strip(parts[locCol]||'');
+      var parts=splitLine(raw), item=strip(parts[itemCol]||''), loc=strip(parts[locCol]||'');
       if(!item) continue;
       var invMatch=inv.filter(function(x){return x.item.toUpperCase()===item.toUpperCase();});
       var oQty=0;
