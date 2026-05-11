@@ -115,7 +115,7 @@
 </div>
 
 <div id="tab-srch" class="panel">
-  <input class="field" type="search" id="srchQ" placeholder="Item #, description, or locator…" oninput="doSearch()" autocorrect="off" autocapitalize="off">
+  <input class="field" type="search" id="srchQ" placeholder="Item #, description, or locator&#8230;" oninput="doSearch()" autocorrect="off" autocapitalize="off">
   <div id="srchOut"><div class="empty">Type to search</div></div>
 </div>
 
@@ -314,9 +314,9 @@ async function onXlsx(event){
     var sheetMap={};
     var entries=Object.keys(sheetNames);
     for(var i=0;i<entries.length;i++){
-      var rId=entries[i], name=sheetNames[rId], target=rels[rId]||'';
+      var rId=entries[i], sname=sheetNames[rId], target=rels[rId]||'';
       var fullPath='xl/'+target.replace(/^\.?\//,'');
-      if(files[fullPath]) sheetMap[name]=parseSheet(files[fullPath],sst);
+      if(files[fullPath]) sheetMap[sname]=parseSheet(files[fullPath],sst);
     }
     var sheetKeys=Object.keys(sheetMap);
     if(sheetKeys.length===0){
@@ -361,7 +361,7 @@ function renderDash(){
     var fromStr2 = m.fromLoc ? esc(m.from)+' '+esc(m.fromLoc) : esc(m.from);
     var toStr2   = m.toLoc   ? esc(m.to)+' '+esc(m.toLoc)     : esc(m.to);
     return '<div class="mv-item'+(isToday?' today':'')+'"><div class="mv-meta">'+fmt(m.ts)+'</div>'
-      +'<div class="mv-title"><strong style="color:#58a6ff">'+esc(m.item)+'</strong>'+(m.desc?' - '+esc(m.desc):'')+'</div>'
+      +'<div class="mv-title"><strong style="color:#58a6ff">'+esc(m.item)+'</strong>'+(m.desc?' - '+esc(m.desc):'')+  '</div>'
       +'<div><span class="mv-tag">'+fromStr2+' &rarr; '+toStr2+'</span><span class="mv-qty">Qty: '+m.qty+'</span></div>'
       +(m.notes?'<div class="mv-notes">'+esc(m.notes)+'</div>':'')+'</div>';
   }).join('');
@@ -415,7 +415,7 @@ function renderMoves(){
     var fromStr = m.fromLoc ? esc(m.from)+' '+esc(m.fromLoc) : esc(m.from);
     var toStr   = m.toLoc   ? esc(m.to)+' '+esc(m.toLoc)     : esc(m.to);
     return '<div class="mv-item'+(isToday?' today':'')+'"><div class="mv-meta">'+fmt(m.ts)+'</div>'
-      +'<div class="mv-title"><strong style="color:#58a6ff">'+esc(m.item)+'</strong>'+(m.desc?' - '+esc(m.desc):'')+'</div>'
+      +'<div class="mv-title"><strong style="color:#58a6ff">'+esc(m.item)+'</strong>'+(m.desc?' - '+esc(m.desc):'')+  '</div>'
       +'<div><span class="mv-tag">'+fromStr+' &rarr; '+toStr+'</span><span class="mv-qty">Qty: '+m.qty+'</span></div>'
       +(m.notes?'<div class="mv-notes">'+esc(m.notes)+'</div>':'')+'</div>';
   }).join('');
@@ -425,18 +425,14 @@ function onCsv(event){
   var file=event.target.files[0]; event.target.value=''; if(!file) return;
   var reader=new FileReader();
   reader.onload=function(e){
-    var lines=e.target.result.split(/
-?
-/); cc=[]; phys={};
+    var lines=e.target.result.split(/\r?\n/); cc=[]; phys={};
     for(var i=1;i<lines.length;i++){
       var raw=lines[i]; if(!raw.trim()) continue;
       var parts=csvSplit(raw), item=strip(parts[0]), loc=strip(parts[1]||'');
       if(!item) continue;
-      // Pull Oracle qty from inventory by item number
       var invMatch=inv.filter(function(x){return x.item.toUpperCase()===item.toUpperCase();});
       var oQty=0;
       if(invMatch.length>0){
-        // If locator provided, try to match locator too
         if(loc){
           var locMatch=invMatch.find(function(x){return x.locator.toUpperCase()===loc.toUpperCase();});
           oQty=locMatch?locMatch.qty:invMatch.reduce(function(s,x){return s+x.qty;},0);
@@ -459,7 +455,7 @@ function renderCycle(){
     return '<tr class="'+(hasDiff?'disc':'')+'"><td>'+esc(c.item)+'</td><td>'+esc(c.locator)+'</td>'
       +'<td style="text-align:right;">'+c.oQty+'</td>'
       +'<td style="text-align:right;"><input class="cc-input" type="number" step="any" value="'+p+'" data-idx="'+idx+'" oninput="updatePhys(this)"></td>'
-      +'<td class="'+(p!==''?(hasDiff?'var-diff':'var-ok'):'')+'" style="text-align:right;" id="var-'+idx+'">'+varText+'</td></tr>';
+      +'<td class="'+(p!==''?(hasDiff?'var-diff':'var-ok'):'')+  '" style="text-align:right;" id="var-'+idx+'">'+varText+'</td></tr>';
   }).join('');
   el.innerHTML='<div class="tbl-wrap"><table><thead><tr><th>Item</th><th>Locator</th><th style="text-align:right;">Oracle</th><th style="text-align:right;">Count</th><th style="text-align:right;">Variance</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
@@ -499,7 +495,7 @@ function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function fmt(iso){var d=new Date(iso);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});}
 function tbl(headers,dataRows){return '<div class="tbl-wrap"><table><thead><tr>'+headers.map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr></thead><tbody>'+dataRows.map(function(cells){return '<tr>'+cells.map(function(c){return '<td>'+c+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div>';}
 function strip(s){return(s||'').trim().replace(/^"|"$/g,'').trim();}
-function csvSplit(line){var result=[],cur='',inQ=false;for(var i=0;i<line.length;i++){var ch=line[i];if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){result.push(cur);cur='';}else{cur+=ch;}}result.push(cur);return result;}
+function csvSplit(line){var result=[],cur='',inQ=false;for(var i=0;i<line.length;i++){var ch=line[i];if(ch=='"'){inQ=!inQ;}else if(ch===','&&!inQ){result.push(cur);cur='';}else{cur+=ch;}}result.push(cur);return result;}
 function setStatus(msg,isErr){var el=document.getElementById('statusBar');el.innerHTML=msg;el.className=isErr?'status-err':'status-ok';el.style.display='block';}
 function clearStatus(){var el=document.getElementById('statusBar');el.style.display='none';el.textContent='';}
 
