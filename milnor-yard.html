@@ -102,7 +102,15 @@
     <div class="card"><div class="card-lbl">Yard B</div><div class="card-val" id="cnt-YDB1">&#8212;</div><div class="card-sub">YDB1</div></div>
     <div class="card"><div class="card-lbl">Yard F</div><div class="card-val" id="cnt-MCH3">&#8212;</div><div class="card-sub">MCH3</div></div>
   </div>
-  <div class="sec-hdr"><span class="sec-ttl">RECENT MOVEMENTS</span></div>
+  <div class="sec-hdr">
+    <span class="sec-ttl">RECENT MOVEMENTS</span>
+    <button class="clr-btn" id="clrDashBtn" onclick="startClr('dash')">Clear All</button>
+  </div>
+  <div id="clrDashConfirm" class="confirm-row" style="display:none;">
+    <span class="confirm-lbl">Sure?</span>
+    <button class="btn-yes" onclick="doClr('dash')">Yes</button>
+    <button class="btn-no"  onclick="cancelClr('dash')">No</button>
+  </div>
   <div id="dashMoves"></div>
 </div>
 
@@ -121,7 +129,7 @@
     <div style="color:#e3b341;font-size:11px;font-weight:600;margin-bottom:10px;">&#8596; LOG A MOVEMENT</div>
     <div><label class="form-lbl">ITEM NUMBER *</label><input class="field" id="mItem" type="text" placeholder="e.g. 07 44141" oninput="autoDesc()" autocorrect="off" autocapitalize="characters"></div>
     <div><label class="form-lbl">DESCRIPTION</label><input class="field" id="mDesc" type="text" placeholder="Auto-filled or enter manually"></div>
-    <div><label class="form-lbl">FROM YARD</label>
+    <div><label class="form-lbl">FROM YARD *</label>
       <select class="field" id="mFrom">
         <option value="">Select...</option>
         <option value="YDA1">YDA1 - Yard A</option>
@@ -130,7 +138,8 @@
         <option value="EXT">External / Other</option>
       </select>
     </div>
-    <div><label class="form-lbl">TO YARD</label>
+    <div><label class="form-lbl">FROM LOCATOR (optional)</label><input class="field" id="mFromLoc" type="text" placeholder="e.g. YB00.01.02.01" autocorrect="off" autocapitalize="off"></div>
+    <div><label class="form-lbl">TO YARD *</label>
       <select class="field" id="mTo">
         <option value="">Select...</option>
         <option value="YDA1">YDA1 - Yard A</option>
@@ -139,6 +148,7 @@
         <option value="EXT">External / Other</option>
       </select>
     </div>
+    <div><label class="form-lbl">TO LOCATOR (optional)</label><input class="field" id="mToLoc" type="text" placeholder="e.g. YB00.02.03.01" autocorrect="off" autocapitalize="off"></div>
     <div><label class="form-lbl">QTY</label><input class="field" id="mQty" type="number" min="0.001" step="any" placeholder="Quantity"></div>
     <div><label class="form-lbl">NOTES (optional)</label><input class="field" id="mNotes" type="text" placeholder=""></div>
     <button class="btn-primary" onclick="logMove()">Log Movement</button>
@@ -346,9 +356,11 @@ function renderDash(){
   if(!recent.length){el.innerHTML='<div class="empty">No movements logged yet.</div>';return;}
   el.innerHTML=recent.map(function(m){
     var isToday=new Date(m.ts).toDateString()===new Date().toDateString();
+    var fromStr2 = m.fromLoc ? esc(m.from)+' '+esc(m.fromLoc) : esc(m.from);
+    var toStr2   = m.toLoc   ? esc(m.to)+' '+esc(m.toLoc)     : esc(m.to);
     return '<div class="mv-item'+(isToday?' today':'')+'"><div class="mv-meta">'+fmt(m.ts)+'</div>'
       +'<div class="mv-title"><strong style="color:#58a6ff">'+esc(m.item)+'</strong>'+(m.desc?' - '+esc(m.desc):'')+'</div>'
-      +'<div><span class="mv-tag">'+esc(m.from)+' &rarr; '+esc(m.to)+'</span><span class="mv-qty">Qty: '+m.qty+'</span></div>'
+      +'<div><span class="mv-tag">'+fromStr2+' &rarr; '+toStr2+'</span><span class="mv-qty">Qty: '+m.qty+'</span></div>'
       +(m.notes?'<div class="mv-notes">'+esc(m.notes)+'</div>':'')+'</div>';
   }).join('');
 }
@@ -380,15 +392,16 @@ function logMove(){
   var item=(document.getElementById('mItem').value||'').trim();
   var desc=(document.getElementById('mDesc').value||'').trim();
   var from=document.getElementById('mFrom').value;
+  var fromLoc=(document.getElementById('mFromLoc').value||'').trim();
   var to=document.getElementById('mTo').value;
+  var toLoc=(document.getElementById('mToLoc').value||'').trim();
   var qty=document.getElementById('mQty').value;
   var notes=(document.getElementById('mNotes').value||'').trim();
-  if(!item||!from||!to||!qty){alert('Fill in Item #, From, To, and Qty.');return;}
-  if(from===to){alert('From and To must be different.');return;}
+  if(!item||!from||!to||!qty){alert('Fill in Item #, From Yard, To Yard, and Qty.');return;}
   if(!desc){var found=inv.find(function(i){return i.item===item;});if(found) desc=found.desc;}
-  moves.push({ts:new Date().toISOString(),item:item,desc:desc,from:from,to:to,qty:parseFloat(qty),notes:notes});
+  moves.push({ts:new Date().toISOString(),item:item,desc:desc,from:from,fromLoc:fromLoc,to:to,toLoc:toLoc,qty:parseFloat(qty),notes:notes});
   save();
-  ['mItem','mDesc','mQty','mNotes'].forEach(function(id){document.getElementById(id).value='';});
+  ['mItem','mDesc','mQty','mNotes','mFromLoc','mToLoc'].forEach(function(id){document.getElementById(id).value='';});
   document.getElementById('mFrom').value=''; document.getElementById('mTo').value='';
   renderMoves(); updateHeader();
 }
@@ -397,9 +410,11 @@ function renderMoves(){
   if(!moves.length){el.innerHTML='<div class="empty">No movements logged yet.</div>';return;}
   el.innerHTML=moves.slice().reverse().map(function(m){
     var isToday=new Date(m.ts).toDateString()===new Date().toDateString();
+    var fromStr = m.fromLoc ? esc(m.from)+' '+esc(m.fromLoc) : esc(m.from);
+    var toStr   = m.toLoc   ? esc(m.to)+' '+esc(m.toLoc)     : esc(m.to);
     return '<div class="mv-item'+(isToday?' today':'')+'"><div class="mv-meta">'+fmt(m.ts)+'</div>'
       +'<div class="mv-title"><strong style="color:#58a6ff">'+esc(m.item)+'</strong>'+(m.desc?' - '+esc(m.desc):'')+'</div>'
-      +'<div><span class="mv-tag">'+esc(m.from)+' &rarr; '+esc(m.to)+'</span><span class="mv-qty">Qty: '+m.qty+'</span></div>'
+      +'<div><span class="mv-tag">'+fromStr+' &rarr; '+toStr+'</span><span class="mv-qty">Qty: '+m.qty+'</span></div>'
       +(m.notes?'<div class="mv-notes">'+esc(m.notes)+'</div>':'')+'</div>';
   }).join('');
 }
@@ -408,11 +423,25 @@ function onCsv(event){
   var file=event.target.files[0]; event.target.value=''; if(!file) return;
   var reader=new FileReader();
   reader.onload=function(e){
-    var lines=e.target.result.split(/\r?\n/); cc=[]; phys={};
+    var lines=e.target.result.split(/
+?
+/); cc=[]; phys={};
     for(var i=1;i<lines.length;i++){
       var raw=lines[i]; if(!raw.trim()) continue;
-      var parts=csvSplit(raw), item=strip(parts[0]), loc=strip(parts[1]||''), oQty=parseFloat(strip(parts[2]||'0'))||0;
+      var parts=csvSplit(raw), item=strip(parts[0]), loc=strip(parts[1]||'');
       if(!item) continue;
+      // Pull Oracle qty from inventory by item number
+      var invMatch=inv.filter(function(x){return x.item.toUpperCase()===item.toUpperCase();});
+      var oQty=0;
+      if(invMatch.length>0){
+        // If locator provided, try to match locator too
+        if(loc){
+          var locMatch=invMatch.find(function(x){return x.locator.toUpperCase()===loc.toUpperCase();});
+          oQty=locMatch?locMatch.qty:invMatch.reduce(function(s,x){return s+x.qty;},0);
+        } else {
+          oQty=invMatch.reduce(function(s,x){return s+x.qty;},0);
+        }
+      }
       cc.push({item:item,locator:loc,oQty:oQty});
     }
     save(); renderCycle();
@@ -452,10 +481,11 @@ function cancelClr(which){
   document.getElementById('clr'+cap(which)+'Btn').style.display='';
 }
 function doClr(which){
-  if(which==='mv'){moves=[];}
+  if(which==='mv'||which==='dash'){moves=[];}
   if(which==='cc'){cc=[];phys={};}
   save(); cancelClr(which);
   if(which==='mv') renderMoves();
+  if(which==='dash') renderDash();
   if(which==='cc') renderCycle();
 }
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
