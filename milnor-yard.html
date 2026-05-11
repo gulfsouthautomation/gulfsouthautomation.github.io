@@ -203,9 +203,11 @@ function go(name, btn){
   document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
   document.getElementById('tab-'+name).classList.add('on');
   btn.classList.add('on');
-  if(name==='dash')  renderDash();
-  if(name==='move')  renderMoves();
-  if(name==='cycle') renderCycle();
+  try{
+    if(name==='dash')  renderDash();
+    if(name==='move')  renderMoves();
+    if(name==='cycle') renderCycle();
+  }catch(e){ console.log('render error:',e); }
 }
 
 function updateHeader(){
@@ -473,12 +475,16 @@ function updatePhys(input){
 }
 
 function startClr(which){
-  document.getElementById('clr'+cap(which)+'Confirm').style.display='flex';
-  document.getElementById('clr'+cap(which)+'Btn').style.display='none';
+  var c=document.getElementById('clr'+cap(which)+'Confirm');
+  var b=document.getElementById('clr'+cap(which)+'Btn');
+  if(c) c.style.display='flex';
+  if(b) b.style.display='none';
 }
 function cancelClr(which){
-  document.getElementById('clr'+cap(which)+'Confirm').style.display='none';
-  document.getElementById('clr'+cap(which)+'Btn').style.display='';
+  var c=document.getElementById('clr'+cap(which)+'Confirm');
+  var b=document.getElementById('clr'+cap(which)+'Btn');
+  if(c) c.style.display='none';
+  if(b) b.style.display='';
 }
 function doClr(which){
   if(which==='mv'||which==='dash'){moves=[];}
